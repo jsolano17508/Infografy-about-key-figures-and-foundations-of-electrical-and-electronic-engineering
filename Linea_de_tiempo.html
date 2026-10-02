@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Línea de Tiempo - Figuras Clave (Escalonado Compacto)</title>
+  
+  <!-- Carga de MathJax para renderizado nativo de LaTeX -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg-page: #f4f5f7;
+      --card-bg: #ffffff;
+      --text-main: #2b2d42;
+      --text-muted: #5c677d;
+      --border-soft: #cbd5e1;
+      --line-gray: #718096;
+      --box-bg: #f8fafc;
+      --box-border: #a0aec0;
+      --badge-bg: #edf2f7;
+      --badge-text: #2d3748;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      padding: 25px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.45;
+    }
+
+    .header {
+      text-align: center;
+      max-width: 960px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid var(--border-soft);
+      padding-bottom: 12px;
+      width: 100%;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      font-weight: normal;
+      color: var(--text-main);
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Eje central */
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      background-color: var(--line-gray);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -1px;
+    }
+
+    /* Distribución escalonada (entrelazada) */
+    .container {
+      padding: 0 22px; 
+      position: relative;
+      width: 50%;
+      margin-top: -85px; /* Empuja cada recuadro hacia arriba para entrelazarlos */
+    }
+
+    .container:first-child {
+      margin-top: 0; /* El primer elemento inicia arriba */
+    }
+
+    /* Conectores circulares */
+    .container::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      right: -5px;
+      background-color: var(--card-bg);
+      border: 2px solid var(--line-gray);
+      top: 18px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .left { left: 0; }
+    .right { left: 50%; }
+    .right::after { left: -5px; }
+
+    .content {
+      padding: 12px 16px;
+      background-color: var(--card-bg);
+      border-radius: 4px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .date-badge {
+      display: inline-block;
+      padding: 1px 8px;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border-radius: 3px;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 4px;
+    }
+
+    .content h2 {
+      font-size: 1.08rem;
+      font-weight: normal;
+      color: #1a202c;
+      margin-bottom: 2px;
+    }
+
+    .content .origin {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+
+    .content p {
+      font-size: 0.86rem;
+      color: #334155;
+      margin-bottom: 4px;
+    }
+
+    /* Caja de fórmulas LaTeX */
+    .formula-box {
+      background-color: var(--box-bg);
+      border: 1px solid var(--box-border);
+      border-left: 3px solid var(--line-gray);
+      padding: 5px 8px;
+      margin-top: 6px;
+      text-align: center;
+      font-size: 0.9rem;
+      border-radius: 2px;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    @media screen and (max-width: 768px) {
+      .timeline::after { left: 18px; }
+      .container {
+        width: 100%;
+        padding-left: 38px;
+        padding-right: 10px;
+        margin-top: 10px !important; /* Desactiva el solapamiento en móviles */
+      }
+      .container::after { left: 13px; }
+      .right { left: 0%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Evolución Histórica de la Ingeniería Eléctrica y Electrónica</h1>
+    <p>Resumen cronológico de científicos clave y sus aportes fundamentales</p>
+  </div>
+
+  <div class="timeline">
+
+    <!-- Volta -->
+    <div class="container left">
+      <div class="content">
+        <span class="date-badge">1745 – 1827</span>
+        <h2>Alessandro Volta</h2>
+        <div class="origin">Físico e inventor italiano (Como, Italia)</div>
+        <p>Pionero de la electroquímica. En 1800 inventó la <strong>pila voltaica</strong>, la primera fuente capaz de proveer corriente eléctrica continua de forma constante.</p>
+        <div class="formula-box">
+          $1\text{ V} = 1\text{ J/C}$
+        </div>
+      </div>
+    </div>
+
+    <!-- Laplace -->
+    <div class="container right">
+      <div class="content">
+        <span class="date-badge">1749 – 1827</span>
+        <h2>Pierre-Simon Laplace</h2>
+        <div class="origin">Astrónomo, físico y matemático francés (Normandía, Francia)</div>
+        <p>Aportó la <strong>Transformada de Laplace</strong>, herramienta matemática para convertir ecuaciones diferenciales al dominio de la frecuencia compleja $s$.</p>
+        <div class="formula-box">
+          $$\mathcal{L}\{f(t)\} = F(s) = \int_{0}^{\infty} f(t) e^{-st} \, dt$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Fourier -->
+    <div class="container left">
+      <div class="content">
+        <span class="date-badge">1768 – 1830</span>
+        <h2>Jean-Baptiste Joseph Fourier</h2>
+        <div class="origin">Matemático y físico francés (Auxerre, Francia)</div>
+        <p>Formuló las <strong>Series y Transformadas de Fourier</strong>, demostrando que cualquier función periódica puede descomponerse en senos y cosenos.</p>
+        <div class="formula-box">
+          $$f(t) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left( a_n \cos(n\omega_0 t) + b_n \sin(n\omega_0 t) \right)$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Ohm -->
+    <div class="container right">
+      <div class="content">
+        <span class="date-badge">1789 – 1854</span>
+        <h2>Georg Simon Ohm</h2>
+        <div class="origin">Físico y matemático alemán (Erlangen, Alemania)</div>
+        <p>Sistematizó cuantitativamente la conducción eléctrica y formuló la <strong>Ley de Ohm</strong> para el análisis de circuitos resistivos.</p>
+        <div class="formula-box">
+          $$V = I \cdot R$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Joule -->
+    <div class="container left">
+      <div class="content">
+        <span class="date-badge">1818 – 1889</span>
+        <h2>James Prescott Joule</h2>
+        <div class="origin">Físico e industrial británico (Salford, Reino Unido)</div>
+        <p>Estableció la <strong>Ley de Joule</strong>, cuantificando la energía térmica disipada por el paso de corriente y la equivalencia entre trabajo y calor.</p>
+        <div class="formula-box">
+          $$P = I^2 \cdot R$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Kirchhoff -->
+    <div class="container right">
+      <div class="content">
+        <span class="date-badge">1824 – 1887</span>
+        <h2>Gustav Kirchhoff</h2>
+        <div class="origin">Físico alemán (Königsberg, Alemania)</div>
+        <p>Estableció las dos leyes de conservación fundamentales para el análisis de redes eléctricas complejas:</p>
+        <div class="formula-box">
+          $$\sum I = 0 \quad \text{(LKC)} \qquad \sum V = 0 \quad \text{(LKT)}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Hertz -->
+    <div class="container left">
+      <div class="content">
+        <span class="date-badge">1857 – 1894</span>
+        <h2>Heinrich Hertz</h2>
+        <div class="origin">Físico alemán (Hamburgo, Alemania)</div>
+        <p>Demostró experimentalmente la existencia de las <strong>ondas electromagnéticas</strong>. En su honor se definió la unidad de frecuencia en el SI.</p>
+        <div class="formula-box">
+          $1\text{ Hz} = 1\text{ ciclo/s}$
+        </div>
+      </div>
+    </div>
+
+    <!-- Thévenin -->
+    <div class="container right">
+      <div class="content">
+        <span class="date-badge">1857 – 1926</span>
+        <h2>Léon Charles Thévenin</h2>
+        <div class="origin">Ingeniero de telégrafos francés (París, Francia)</div>
+        <p>Formuló en 1883 el <strong>Teorema de Thévenin</strong> para simplificar redes lineales compuestas por fuentes e impedancias.</p>
+        <div class="formula-box">
+          $$\text{Circuito equiv.: } V_{\text{th}} \text{ en serie con } R_{\text{th}}$$
+        </div>
+      </div>
+    </div>
+
+    <!-- Norton -->
+    <div class="container left">
+      <div class="content">
+        <span class="date-badge">1898 – 1983</span>
+        <h2>Edward Lawry Norton</h2>
+        <div class="origin">Ingeniero eléctrico e inventor estadounidense (EE. UU.)</div>
+        <p>Propuso el <strong>Teorema de Norton</strong>, dual al de Thévenin, fundamental en el modelado de dispositivos activos y transistores.</p>
+        <div class="formula-box">
+          $$\text{Circuito equiv.: } I_{\text{N}} \text{ en paralelo con } R_{\text{N}}$$
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
